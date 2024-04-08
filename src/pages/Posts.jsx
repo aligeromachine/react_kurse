@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import St from "../styles/App.module.css"
+import St from "../styles/App.module.css";
 import PostList from "../components/PostList";
 import PostForm from "../components/PostForm";
 import PostFilter from "../components/PostFilter";
 import MyModal from "../components/UI/mymodal/MyModal";
 import MyBtn from "../components/UI/button/MyBtn";
 import '../styles/post.css';
-import {useSortedPosts} from "../hooks/usePost" 
+import {useSortedPosts} from "../hooks/usePost";
 import { v4 as uuidv4 } from 'uuid';
-import * as Request from "../API/PostService"
-import * as utils  from "../components/Utils"
+import * as Request from "../API/PostService";
+import * as utils  from "../components/Utils";
 import Loader from "../components/UI/loader/Loader";
 import { useFetching } from "../hooks/useFetching";
 import Pagination from "../components/UI/paginations/Pagination";
@@ -35,7 +35,8 @@ const Posts = () => {
   
   useEffect(() => {
     fetchPosts(limit, page);
-  }, [page, limit,]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, limit]);
 
   function create_post(new_post){
     setPosts([...posts, new_post]);

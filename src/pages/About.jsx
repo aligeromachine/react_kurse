@@ -1,10 +1,13 @@
 import React from "react";
+import St from "../styles/App.module.css"
 
 const About = () => {
   return(
-    <h1>
-      This Application is Complete
-    </h1>
+    <div className={St.root}>
+      <h1>
+        This Application is Complete
+      </h1>
+    </div>
   );
 }
 

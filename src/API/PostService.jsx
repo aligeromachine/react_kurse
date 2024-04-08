@@ -28,8 +28,7 @@ export async function fetchById(url, id) {
       throw new Error('Network response was not ok');
     }
     // Convert the response to JSON, This will be the resolved value of the Promise
-    const report = await response.json(); 
-    return report;
+    return await response.json(); 
   } catch (e) {
     throw e.message;
   }
