@@ -6,6 +6,7 @@ import Login from "../pages/Login";
 
 export const private_routes = [
   {path: '/about', element: <About />, exact: true},
+  {path: '/', element: <Posts />, exact: true},
   {path: '/posts', element: <Posts />, exact: true},
   {path: '/login', element: <Posts />, exact: true},
   {path: '/posts/:id', element: <PostIdPages />, exact: true},

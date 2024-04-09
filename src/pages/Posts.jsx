@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import St from "../styles/App.module.css";
 import PostList from "../components/PostList";
 import PostForm from "../components/PostForm";
@@ -12,7 +12,9 @@ import * as Request from "../API/PostService";
 import * as utils  from "../components/Utils";
 import Loader from "../components/UI/loader/Loader";
 import { useFetching } from "../hooks/useFetching";
+import { useObserver } from "../hooks/useObserver";
 import Pagination from "../components/UI/paginations/Pagination";
+import MySel from "../components/UI/select/MySel";
 
 const Posts = () => {
 
@@ -22,7 +24,7 @@ const Posts = () => {
   
   const sortedAndSearchPost = useSortedPosts(posts, filter.sort, filter.query);
   const [totalPages, setTotalPages] = useState(0);
-  const [limit, ] = useState(10);
+  const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
   
   const [fetchPosts, isLoading, isErr] = useFetching(async (limit, page) => {
@@ -33,6 +35,11 @@ const Posts = () => {
     setPosts(ls);
   });
   
+  // const lastElem = useRef();
+  // useObserver(lastElem, page < totalPages, isLoading, () => {
+  //   setPage(page + 1);
+  // })
+
   useEffect(() => {
     fetchPosts(limit, page);
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -62,16 +69,26 @@ const Posts = () => {
         </MyModal>        
         <hr style={{margin: "15px 0"}}/>
         <PostFilter filter={filter} setFilter={setFilter}/>
+        <MySel
+          value={limit}
+          onChange={value => setLimit(value)}
+          default="count elem"
+          opt={[
+            {value: 5, name: "5"},
+            {value: 10, name: "10"},
+            {value: 25, name: "25"},
+            {value: -1, name: "all"},
+          ]}
+        />
         {isErr && <h1>ERR {isErr}</h1>}
-        {isLoading
-          ? <Loader />
-          : <PostList remove={remove_post} posts={sortedAndSearchPost} title="List of Posts"/>
-        }
+        <PostList remove={remove_post} posts={sortedAndSearchPost} title="List of Posts"/>
+        {isLoading && <Loader />}
         <Pagination 
           totalPages={totalPages}
           page={page} 
           changePage={changePage} 
           />
+        {/* <div ref={lastElem} style={{height: "20px", background: "red"}}></div> */}
       </div> 
     </div>  
   );
