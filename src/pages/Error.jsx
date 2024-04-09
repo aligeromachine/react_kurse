@@ -1,9 +1,10 @@
 import React from "react";
+import St from "../styles/App.module.css"
 
 const Error = () => {
   return(
-    <div style={{color: "red"}}>
-      <h1>
+    <div className={St.root} >
+      <h1 style={{color: "red"}}>
         PAGE NOT FOUND
       </h1>
     </div>

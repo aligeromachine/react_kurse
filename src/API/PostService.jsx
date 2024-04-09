@@ -20,10 +20,9 @@ export async function fetchData(url, limit, page) {
   }
 }
 
-export async function fetchById(url, id) {
-  const urlWithParams = `${url}/${id}`;
+async function fetchBase(url) {
   try {
-    const response = await fetch(urlWithParams);
+    const response = await fetch(url);
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
@@ -32,4 +31,14 @@ export async function fetchById(url, id) {
   } catch (e) {
     throw e.message;
   }
+}
+
+export async function fetchById(url, id) {
+  const urlWithParams = `${url}/${id}`;
+  return await fetchBase(urlWithParams);
+}
+
+export async function fetchComment(url, id) {
+  const urlWithParams = `${url}/${id}/comments`;
+  return await fetchBase(urlWithParams);
 }
